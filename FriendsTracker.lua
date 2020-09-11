@@ -73,59 +73,65 @@ frame:SetScript("OnEvent", function(self,event,...)
     end
  
     --Battle.net Friends
-    FriendsTracker_PerAccount = FriendsTracker_PerAccount or {}
-    local NumCurrentBnetFriends = BNGetNumFriends()
-    if not ranonce or (NumCurrentBnetFriends ~= FriendsTracker_PerAccount.NumOldBnetFriends) then --if ranonce then only run this when the amount is not equal
-        if not FriendsTracker_PerAccount.BnetFriendlist then
-            FriendsTracker_PerAccount.BnetFriendlist = {}
-        else
-            for btag,v in pairs(FriendsTracker_PerAccount.BnetFriendlist)do
-				
-                FriendsTracker_PerAccount.BnetFriendlist[btag] = 2 -- deleted?
-				--check for old file structure (key = number, value = name)
-				if tonumber(btag) then
-					FriendsTracker_PerAccount.BnetFriendlist[btag] = nil
+	
+	if BNConnected() then
+		FriendsTracker_PerAccount = FriendsTracker_PerAccount or {}
+		local NumCurrentBnetFriends = BNGetNumFriends()
+		if not ranonce or (NumCurrentBnetFriends ~= FriendsTracker_PerAccount.NumOldBnetFriends) then --if ranonce then only run this when the amount is not equal
+			if not FriendsTracker_PerAccount.BnetFriendlist then
+				FriendsTracker_PerAccount.BnetFriendlist = {}
+			else
+				for btag,v in pairs(FriendsTracker_PerAccount.BnetFriendlist)do
+					
+					FriendsTracker_PerAccount.BnetFriendlist[btag] = 2 -- deleted?
+					--check for old file structure (key = number, value = name)
+					if tonumber(btag) then
+						FriendsTracker_PerAccount.BnetFriendlist[btag] = nil
+					end
+					--
 				end
-				--
-            end
-        end
-        for i = 1, NumCurrentBnetFriends do
-            local bnetIDAccount, accountName, battleTag = C_BattleNet.GetFriendAccountInfo(i)
-            if (battleTag) then
-                if FriendsTracker_PerAccount.BnetFriendlist[battleTag] then
-                    FriendsTracker_PerAccount.BnetFriendlist[battleTag] = 3 -- alive
-                else
-                    FriendsTracker_PerAccount.BnetFriendlist[battleTag] = 1 -- new
-                end
-            end
-        end
- 
-        local allfound = true
-        for btag,v in pairs(FriendsTracker_PerAccount.BnetFriendlist)do
-            if v==1 then
-                print("|cff0099ff"..addonname.."|r: |cFFFF0000Your new friend "..btag.." is getting added to your list of existing Battle.net friends.")
-            elseif v==2 then
-				FriendsTracker_PerAccount.BnetFriendlist[btag] = nil
-                print("|cff0099ff"..addonname.."|r: |cFFFF0000Your friend "..btag.." is no longer on your Battle.net friendlist.")
-                if not FriendsTracker_PerAccount.DeletedBnetFriends then
-                    FriendsTracker_PerAccount.DeletedBnetFriends = {}
-                end
-				--local hour, min, wday, day, month, year, sec, yday, isdst = date("*t")
-				local datee = date("*t")
-                FriendsTracker_PerAccount.DeletedBnetFriends[btag] = {day = datee.day, month = datee.month, year = datee.year}
-                allfound = false
-            end--  v==3: print(btag,"found in both tables")
-        end
- 
-        if allfound then
-            print("|cff0099ff"..addonname.."|r: |cFF00FF00All your Battle.net friends still exist")
-        else
-            print("|cff0099ff"..addonname.."|r: |cFFFF0000Some Battle.net friends have been removed")
-        end
- 
-        FriendsTracker_PerAccount.NumOldBnetFriends = NumCurrentBnetFriends
-    end
-    ranonce = true
+			end
+			for i = 1, NumCurrentBnetFriends do
+				local accountInfo = C_BattleNet.GetFriendAccountInfo(i)
+				local battleTag = accountInfo.battleTag
+				if (battleTag) then
+					if FriendsTracker_PerAccount.BnetFriendlist[battleTag] then
+						FriendsTracker_PerAccount.BnetFriendlist[battleTag] = 3 -- alive
+					else
+						FriendsTracker_PerAccount.BnetFriendlist[battleTag] = 1 -- new
+					end
+				end
+			end
+	 
+			local allfound = true
+			for btag,v in pairs(FriendsTracker_PerAccount.BnetFriendlist)do
+				if v==1 then
+					print("|cff0099ff"..addonname.."|r: |cFFFF0000Your new friend "..btag.." is getting added to your list of existing Battle.net friends.")
+				elseif v==2 then
+					FriendsTracker_PerAccount.BnetFriendlist[btag] = nil
+					print("|cff0099ff"..addonname.."|r: |cFFFF0000Your friend "..btag.." is no longer on your Battle.net friendlist.")
+					if not FriendsTracker_PerAccount.DeletedBnetFriends then
+						FriendsTracker_PerAccount.DeletedBnetFriends = {}
+					end
+					--local hour, min, wday, day, month, year, sec, yday, isdst = date("*t")
+					local datee = date("*t")
+					FriendsTracker_PerAccount.DeletedBnetFriends[btag] = {day = datee.day, month = datee.month, year = datee.year}
+					allfound = false
+				end--  v==3: print(btag,"found in both tables")
+			end
+	 
+			if allfound then
+				print("|cff0099ff"..addonname.."|r: |cFF00FF00All your Battle.net friends still exist")
+			else
+				print("|cff0099ff"..addonname.."|r: |cFFFF0000Some Battle.net friends have been removed")
+			end
+	 
+			FriendsTracker_PerAccount.NumOldBnetFriends = NumCurrentBnetFriends
+		end
+		ranonce = true
+	
+	end
+    
 end)
  
 local CALENDAR_FULLDATE_MONTH_NAMES = { --copied from Blizzard_Calendar.lua
