@@ -90,7 +90,7 @@ frame:SetScript("OnEvent", function(self,event,...)
             end
         end
         for i = 1, NumCurrentBnetFriends do
-            local bnetIDAccount, accountName, battleTag = BNGetFriendInfo(i)
+            local bnetIDAccount, accountName, battleTag = C_BattleNet.GetFriendAccountInfo(i)
             if (battleTag) then
                 if FriendsTracker_PerAccount.BnetFriendlist[battleTag] then
                     FriendsTracker_PerAccount.BnetFriendlist[battleTag] = 3 -- alive

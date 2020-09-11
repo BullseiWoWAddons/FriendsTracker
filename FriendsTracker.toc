@@ -1,6 +1,6 @@
-## Interface: 70200
+## Interface: 80300
 ## Title: FriendsTracker
-## Version: 7.2.3
+## Version: 7.2.4
 ## Notes: Tells you which friends don't exist anymore on your friendlist
 ## SavedVariables: FriendsTracker_PerAccount
 ## SavedVariablesPerCharacter: FriendsTracker_PerCharacter
