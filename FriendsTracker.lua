@@ -9,13 +9,13 @@ frame:SetScript("OnEvent", function(self,event,...)
     if event == "PLAYER_LOGIN" then
         frame:RegisterEvent("FRIENDLIST_UPDATE")
         frame:RegisterEvent("BN_FRIEND_LIST_SIZE_CHANGED")
-		ShowFriends()--force FRIENDLIST_UPDATE, since if we register FRIENDLIST_UPDATE from the beginning it can happen that it fires before saved variables are loaded
+		C_FriendList.ShowFriends()--force FRIENDLIST_UPDATE, since if we register FRIENDLIST_UPDATE from the beginning it can happen that it fires before saved variables are loaded
 		return
     end
 
     -- oldschool Realm Friends
     FriendsTracker_PerCharacter = FriendsTracker_PerCharacter or {}
-    local NumCurrentFriends = GetNumFriends()
+    local NumCurrentFriends = C_FriendList.GetNumFriends()()
     if not ranonce or (NumCurrentFriends ~= FriendsTracker_PerCharacter.NumOldFriends) then --if ranonce then only run this when the amount is not equal
         if not FriendsTracker_PerCharacter.Friendlist then
             FriendsTracker_PerCharacter.Friendlist={};
@@ -33,7 +33,7 @@ frame:SetScript("OnEvent", function(self,event,...)
         end
  
         for i = 1, NumCurrentFriends do
-            local name, _, _, _, _, _, _, _, guid = GetFriendInfo(i)
+            local name, _, _, _, _, _, _, _, guid = C_FriendList.GetFriendInfo(i)
             if name then
 				local _, _, _, _, _, _, _, _, realm = GetPlayerInfoByGUID(guid)
 				if realm then
