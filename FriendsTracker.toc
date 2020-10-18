@@ -4,4 +4,7 @@
 ## Notes: Tells you which friends don't exist anymore on your friendlist
 ## SavedVariables: FriendsTracker_PerAccount
 ## SavedVariablesPerCharacter: FriendsTracker_PerCharacter
+
+## X-Curse-Project-ID: 261945
+
 FriendsTracker.lua
