@@ -1,6 +1,6 @@
 ## Interface: 90001
 ## Title: FriendsTracker
-## Version: 9.0.1
+## Version: @project-version@
 ## Notes: Tells you which friends don't exist anymore on your friendlist
 ## SavedVariables: FriendsTracker_PerAccount
 ## SavedVariablesPerCharacter: FriendsTracker_PerCharacter
