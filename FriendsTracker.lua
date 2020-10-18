@@ -15,7 +15,7 @@ frame:SetScript("OnEvent", function(self,event,...)
 
     -- oldschool Realm Friends
     FriendsTracker_PerCharacter = FriendsTracker_PerCharacter or {}
-    local NumCurrentFriends = C_FriendList.GetNumFriends()()
+    local NumCurrentFriends = C_FriendList.GetNumFriends()
     if not ranonce or (NumCurrentFriends ~= FriendsTracker_PerCharacter.NumOldFriends) then --if ranonce then only run this when the amount is not equal
         if not FriendsTracker_PerCharacter.Friendlist then
             FriendsTracker_PerCharacter.Friendlist={};
