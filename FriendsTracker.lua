@@ -93,14 +93,16 @@ frame:SetScript("OnEvent", function(self,event,...)
 			end
 			for i = 1, NumCurrentBnetFriends do
 				local accountInfo = C_BattleNet.GetFriendAccountInfo(i)
-				local battleTag = accountInfo.battleTag
-				if (battleTag) then
-					if FriendsTracker_PerAccount.BnetFriendlist[battleTag] then
-						FriendsTracker_PerAccount.BnetFriendlist[battleTag] = 3 -- alive
-					else
-						FriendsTracker_PerAccount.BnetFriendlist[battleTag] = 1 -- new
-					end
-				end
+                if accountInfo then
+                    local battleTag = accountInfo.battleTag
+                    if (battleTag) then
+                        if FriendsTracker_PerAccount.BnetFriendlist[battleTag] then
+                            FriendsTracker_PerAccount.BnetFriendlist[battleTag] = 3 -- alive
+                        else
+                            FriendsTracker_PerAccount.BnetFriendlist[battleTag] = 1 -- new
+                        end
+                    end
+                end
 			end
 	 
 			local allfound = true
