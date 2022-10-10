@@ -13,6 +13,12 @@ ignore = {
 	"1/[A-Z][A-Z][A-Z0-9_]+", -- three letter+ constants
 }
 globals = {
+
+	"FriendsTracker_PerCharacter",
+	"GetPlayerInfoByGUID",
+	"BNConnected",
+	"FriendsTracker_PerAccount",
+	"BNGetNumFriends",
 	-- wow std api
 	"abs",
 	"acos",
